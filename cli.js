@@ -21,10 +21,14 @@ const optionDef = [
     { name: 'debug', alias: 'd', type: Boolean },
 ];
 
-E.keyToWords = key => bip39.entropyToMnemonic(key.part.k.data, bip39.ENGLISH_WORDLIST);
+E.keyToWords = key => bip39.entropyToMnemonic(key.part.k.data, bip39.wordlists.english);
 
 E.wordsToKey = words => {
-    const str = bip39.mnemonicToEntropy(words, bip39.ENGLISH_WORDLIST);
+    let wordsArr = words.split(' ')
+    const filteredWords = wordsArr.map(item => {
+        return bip39.wordlists.english.find(word => word.startsWith(item))
+    })
+    const str = bip39.mnemonicToEntropy(filteredWords.join(' '), bip39.wordlists.english);
     const buf = Buffer.from(str, 'hex');
     const pair = nacl.sign.keyPair.fromSeed(new Uint8Array(buf));
     const key = new sshpk.PrivateKey({
