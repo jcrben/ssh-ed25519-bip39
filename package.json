@@ -1,5 +1,5 @@
 {
-    "name": "ssh-ed25519-bip39",
+    "name": "jcrben-generate-ssh-from-bip39",
     "version": "0.1.1",
     "description": "Backup/restore ed25519 ssh key using BIP39",
     "bin": {
